@@ -1,2 +1,3 @@
-sudoku17_shuffled.csv
-main
+*.zip
+/data/
+out/

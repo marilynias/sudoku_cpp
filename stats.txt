@@ -1,0 +1,17 @@
+samplesize 10000
+
+remove_existing_numbers() || solve_singles() || solve_hidden_singles() || remove_naked_subset() || remove_hidden_subset() || remove_pointing_subset() || remove_box_line_reduction() || remove_xwing()
+
+
+
+
+
+
+84.54% in 13.1451s (no opt) - remove_box_line_reduction
+84.56% in 13.5868s (no opt) - remove_xwing
+84.56% in 13.001s (j=i+1) - remove_xwing
+
+remove_existing_numbers() || solve_singles() || solve_hidden_singles() || remove_naked_subset() || remove_hidden_subset(2) || remove_hidden_subset(3) || remove_pointing_subset() || remove_box_line_reduction() || remove_xwing() || remove_hidden_subset(4)
+solved 8417 out of 10000: 84.17% - base1
+solved 8423 out of 10000: 84.23% - fixed xwing
+solved 9020 out of 10000: 90.2% - simple coloring

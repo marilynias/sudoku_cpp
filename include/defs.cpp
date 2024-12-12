@@ -17,4 +17,3 @@ bool value_isValid(int val)
 {
     return (1 <= val || val <= 9 || val == EMPTY);
 }
-

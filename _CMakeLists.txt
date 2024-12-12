@@ -1,0 +1,31 @@
+cmake_minimum_required(VERSION 3.5)
+project(SudokuSolver)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/sdl2)
+
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release)
+endif()
+
+set(CMAKE_CXX_COMPILER "g++")
+set(CMAKE_CXX_FLAGS "-fdiagnostics-color=always -g")
+set(CMAKE_CXX_FLAGS_DEBUG "-g")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+
+find_package(Boost COMPONENTS filesystem REQUIRED)
+
+
+
+file(GLOB srces "include/*.h" "include/*.cpp")
+add_executable(${PROJECT_NAME} main.cpp ${srces})
+
+# set(SDL2_Path /usr/include/SDL2)
+find_package( SDL2 REQUIRED )
+find_package( SDL2_ttf REQUIRED)
+
+target_link_libraries( ${PROJECT_NAME} 
+  SDL2::Main 
+  SDL2::TTF
+  Boost::filesystem
+)
+
+target_compile_definitions(${PROJECT_NAME} PRIVATE _REENTRANT)

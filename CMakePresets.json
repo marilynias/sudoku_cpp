@@ -1,0 +1,36 @@
+{
+  "version": 8,
+  "configurePresets": [
+    {
+      "name": "debug",
+      "displayName": "debug preset",
+      "description": "Sets Ninja generator, build and install directory",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug", "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}" }
+    },
+    {
+      "name": "test",
+      "displayName": "test preset",
+      "description": "Sets Ninja generator, build and install directory",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug", "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}" }
+    },
+    {
+      "name": "release",
+      "displayName": "release preset",
+      "description": "Sets Ninja generator, build and install directory",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release", "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}" }
+    }
+  ],
+  "buildPresets": [
+    { "name": "b_debug", "description": "", "displayName": "", "configurePreset": "debug" },
+    { "name": "b_release", "description": "", "displayName": "", "configurePreset": "release" }
+  ],
+  "testPresets": [
+    { "name": "test", "description": "", "displayName": "", "configurePreset": "test" }
+  ]
+}

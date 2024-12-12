@@ -53,7 +53,27 @@
         "unordered_set": "cpp",
         "sstream": "cpp",
         "valarray": "cpp",
-        "bitset": "cpp"
+        "bitset": "cpp",
+        "cstring": "cpp",
+        "ctime": "cpp",
+        "chrono": "cpp",
+        "ratio": "cpp",
+        "cassert": "cpp",
+        "csignal": "cpp",
+        "condition_variable": "cpp",
+        "iomanip": "cpp",
+        "mutex": "cpp",
+        "semaphore": "cpp",
+        "stop_token": "cpp",
+        "thread": "cpp",
+        "complex": "cpp",
+        "optional": "cpp",
+        "source_location": "cpp",
+        "typeindex": "cpp",
+        "variant": "cpp",
+        "codecvt": "cpp",
+        "shared_mutex": "cpp"
     },
-    "C_Cpp.default.compilerPath": "/usr/bin/g++"
+    "C_Cpp.default.compilerPath": "/usr/bin/g++",
+    "cmake.sourceDirectory": "/home/africk/proj/sudoku_cpp"
 }

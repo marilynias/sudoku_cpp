@@ -1,10 +1,11 @@
 #include "graphics.h"
+#include "controls.h"
 
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
-rmask = 0xff000000;
-gmask = 0x00ff0000;
-bmask = 0x0000ff00;
-amask = 0x000000ff;
+const int rmask = 0xff000000;
+const int gmask = 0x00ff0000;
+const int bmask = 0x0000ff00;
+const int amask = 0x000000ff;
 #else
 const int rmask = 0x000000ff;
 const int gmask = 0x0000ff00;
@@ -12,9 +13,7 @@ const int bmask = 0x00ff0000;
 const int amask = 0xff000000;
 #endif
 
-
-
-App app;
+static App app;
 
 void initSDL(void)
 {
@@ -56,43 +55,14 @@ void initSDL(void)
     }
 }
 
-void doInput(void)
-{
-    SDL_Event event;
-    while (SDL_PollEvent(&event))
-    {
-        if (event.type == SDL_QUIT)
-        {
-            exit(0);
-        }
-
-        if (event.type == SDL_KEYDOWN)
-        {
-            if (event.key.keysym.sym == SDLK_SPACE)
-            {
-                app.sudoku->step();
-            }
-        }
-    }
-}
-
-// void drawBorder(void){
-
-//     SDL_SetRenderDrawColor(app.renderer, 0, 0, 0, 255);
-//     SDL_RenderDrawRect(app.renderer, );
-//     SDL_RenderDrawLine(app.renderer, topleft_x, topleft_y, topright_x, topright_y);
-//     SDL_RenderDrawLine(app.renderer, topright_x, topright_y, bottomright_x, bottomright_y);
-//     SDL_RenderDrawLine(app.renderer, bottomright_x, bottomright_y, bottomleft_x, bottomleft_y);
-//     SDL_RenderDrawLine(app.renderer, bottomleft_x, bottomleft_y, topleft_x, topleft_y);
-// }
 
 void prepareScene(void)
 {
-    if(app.sudoku->won){
+    if(app.sudoku->won)
         SDL_SetRenderDrawColor(app.renderer, 0, 255, 0, 255);
-    } else {
+    else 
         SDL_SetRenderDrawColor(app.renderer, 20, 20, 20, 255);
-    }
+    
     
     SDL_RenderClear(app.renderer);
     app.sudoku->draw(app.renderer);
@@ -104,15 +74,15 @@ void presentScene(void)
 }
 
 void cleanup(){
+    delete app.sudoku;
+    TTF_CloseFont(GO_Tile::valFont);
+    SDL_FreeSurface(GO_Tile::poss_Surface);
+    TTF_Quit();
     SDL_DestroyRenderer(app.renderer);
     SDL_Quit();
+    cout << "Goodbye!" << endl;
 }
 
-
-void init_GO(string sudoku){
-    
-    
-}
 
 void init(){
     memset(&app, 0, sizeof(App));
@@ -125,24 +95,50 @@ void init(){
     SDL_assert(GO_Tile::valFont != NULL && possFont != NULL);
 }
 
-
-int gameLoop(string sudoku)
+int mainLoop(string sudoku)
 {
+    if (app.sudoku != nullptr)
+        delete app.sudoku;
     app.sudoku = new GO_Sudoku(sudoku);
 
-    while (true){
-        if(app.sudoku->won){
-            delete(app.sudoku);
+    while (true)
+    {
+        if (app.sudoku->next)
+        {
+            app.sudoku->step();
+            app.sudoku->next = false;
+            app.sudoku->won = app.sudoku->sud->check_win();
             break;
-        }
+        };
 
+        app.doInput();
+        prepareScene();
+        presentScene();
+        SDL_Delay(20);
+    }
+    // app.sudoku->sud->print_board();
+    return app.sudoku->won;
+}
+
+int solve_all(string sudoku)
+{
+    if(app.sudoku != nullptr) delete app.sudoku;
+    app.sudoku = new GO_Sudoku(sudoku);
+    
+
+    while (!app.sudoku->next)
+    {
+        if(!app.sudoku->step()){
+            app.sudoku->next = true;
+            app.sudoku->won = app.sudoku->sud->check_win();
+        };
 
         prepareScene();
         
-        doInput();
+        app.doInput();
         presentScene();
-        SDL_Delay(200);
+        SDL_Delay(20);
     }
-
-    return 1;
+    // app.sudoku->sud->print_board();
+    return app.sudoku->won;
 }
